@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Tarif Laundry</title>
+    <title>Register Pelanggan</title>
     <style>
-        /* Mengatur latar belakang dan font */
+        /* Mengatur latar belakang halaman */
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f4f7fc;
@@ -16,7 +16,7 @@
 
         /* Container untuk form */
         .container {
-            width: 50%;
+            width: 40%;
             margin: 50px auto;
             background-color: #fff;
             padding: 40px;
@@ -25,20 +25,10 @@
         }
 
         /* Judul halaman */
-        h2 {
+        h1 {
             text-align: center;
             color: #333;
-            margin-bottom: 30px;
-        }
-
-        /* Pesan sukses */
-        .success-message {
-            background-color: #d4edda;
-            color: #155724;
-            padding: 15px;
-            border-radius: 5px;
             margin-bottom: 20px;
-            text-align: center;
         }
 
         /* Label dan input */
@@ -49,7 +39,7 @@
             display: block;
         }
 
-        input[type="text"], input[type="number"] {
+        input[type="text"], input[type="email"], input[type="password"] {
             width: 100%;
             padding: 12px;
             margin-top: 8px;
@@ -60,7 +50,7 @@
             transition: border-color 0.3s;
         }
 
-        input[type="text"]:focus, input[type="number"]:focus {
+        input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
             border-color: #5cb85c;
             outline: none;
         }
@@ -82,6 +72,13 @@
             background-color: #4cae4c;
         }
 
+        /* Pesan kesalahan */
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
         /* Responsif untuk perangkat mobile */
         @media (max-width: 768px) {
             .container {
@@ -94,24 +91,36 @@
 <body>
 
     <div class="container">
-        <h2>Tambah Tarif Laundry</h2>
+        <h1>Register Pelanggan</h1>
 
-        <!-- Menampilkan pesan sukses jika ada -->
-        @if(session('success'))
-            <div class="success-message">{{ session('success') }}</div>
+        <!-- Menampilkan pesan kesalahan jika ada -->
+        @if($errors->any())
+            <div class="error-message">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
         @endif
 
-        <!-- Form untuk menambah tarif laundry -->
-        <form action="{{ route('laundry.rate.add') }}" method="POST">
+        <!-- Form untuk register pelanggan -->
+        <form action="{{ route('register.customer') }}" method="POST">
             @csrf
 
-            <label for="service_name">Nama Layanan:</label>
-            <input type="text" name="service_name" required>
+            <label for="name">Nama</label>
+            <input type="text" name="name" required>
 
-            <label for="rate">Tarif:</label>
-            <input type="number" name="rate" required step="0.01">
+            <label for="email">Email</label>
+            <input type="email" name="email" required>
 
-            <button type="submit">Tambah Tarif Laundry</button>
+            <label for="password">Password</label>
+            <input type="password" name="password" required>
+
+            <label for="password_confirmation">Konfirmasi Password</label>
+            <input type="password" name="password_confirmation" required>
+
+            <button type="submit">Daftar Pelanggan</button>
         </form>
     </div>
 

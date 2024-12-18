@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Manajemen Laundry</title>
+    <title>Dashboard Manajemen Laundry Namo</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,12 +24,17 @@
         }
         nav a {
             color: white;
-            margin: 0 15px;
+            margin: 0 10px;
             text-decoration: none;
+            font-size: 16px;
+        }
+        nav a:hover {
+            text-decoration: underline;
         }
         .container {
             display: flex;
             justify-content: space-around;
+            flex-wrap: wrap;
             padding: 20px;
         }
         .card {
@@ -43,9 +48,11 @@
         }
         .card h3 {
             margin: 10px 0;
+            font-size: 18px;
         }
         .card p {
-            font-size: 18px;
+            font-size: 20px;
+            font-weight: bold;
         }
         footer {
             background-color: #333;
@@ -61,40 +68,42 @@
 <body>
 
 <header>
-    <h1>Dashboard Manajemen Laundry</h1>
+    <h1>Dashboard Manajemen Laundry Namo</h1>
 </header>
 
 <nav>
-    <a href="{{ url('dashboard') }}">Dashboard</a>
-    <a href="{{ url('management/customers') }}">Data Pelanggan</a>
-    <a href="{{ url('management/stocks') }}">Manajemen Stok</a>
-    <a href="{{ url('management/laundry-rates') }}">Tarif Laundry</a>
-    <a href="{{ url('management/transactions') }}">Laporan Transaksi</a>
-    <a href="{{ url('login/cashier') }}">Login Kasir</a>
-    <a href="{{ url('login/customer') }}">Login Pelanggan</a>
+    <a href="{{ route('dashboard') }}">Dashboard</a>
+    <a href="{{ route('management.customers') }}">Data Pelanggan</a>
+    <a href="{{ route('management.stocks') }}">Manajemen Stok</a>
+    <a href="{{ route('management.laundry_rates') }}">Tarif Laundry</a>
+    <a href="{{ route('management.transactions') }}">Laporan Transaksi</a>
+    <a href="{{ route('login.cashier') }}">Login Kasir</a>
+    <a href="{{ route('login.customer') }}">Login Pelanggan</a>
+    <a href="{{ route('register.cashier.form') }}">Register Kasir</a>
+    <a href="{{ route('register.customer.form') }}">Register Pelanggan</a>
 </nav>
 
 <div class="container">
     <div class="card">
         <h3>Total Pelanggan</h3>
-        <p>{{ $totalCustomers }}</p>
+        <p>{{ $totalCustomers ?? 0 }}</p>
     </div>
     <div class="card">
         <h3>Total Stok</h3>
-        <p>{{ $totalStocks }}</p>
+        <p>{{ $totalStocks ?? 0 }}</p>
     </div>
     <div class="card">
         <h3>Total Tarif Laundry</h3>
-        <p>{{ $totalLaundryRates }}</p>
+        <p>{{ $totalLaundryRates ?? 0 }}</p>
     </div>
     <div class="card">
         <h3>Total Transaksi</h3>
-        <p>{{ $totalTransactions }}</p>
+        <p>{{ $totalTransactions ?? 0 }}</p>
     </div>
 </div>
 
 <footer>
-    <p>&copy; 2024 Manajemen Laundry</p>
+    <p>&copy; 2024 Manajemen Laundry Namo</p>
 </footer>
 
 </body>

@@ -10,6 +10,56 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    // Fungsi registrasi kasir
+    public function registerCashier(Request $request)
+    {
+        // Validasi input
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:cashiers,email',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        // Menyimpan kasir baru dengan role 'kasir'
+        $cashier = Cashier::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'kasir',  // Menetapkan role kasir
+        ]);
+
+        // Login kasir setelah registrasi
+        Auth::login($cashier);
+
+        return redirect()->route('dashboard')->with('message', 'Kasir berhasil terdaftar dan login');
+        return redirect()->route('login.cashier')->with('message', 'Kasir berhasil terdaftar');
+    }
+
+    // Fungsi registrasi pelanggan
+    public function registerCustomer(Request $request)
+    {
+        // Validasi input
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:customers,email',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        // Menyimpan pelanggan baru dengan role 'pelanggan'
+        $customer = Customer::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'pelanggan',  // Menetapkan role pelanggan
+        ]);
+
+        // Login pelanggan setelah registrasi
+        Auth::login($customer);
+
+        return redirect()->route('dashboard')->with('message', 'Pelanggan berhasil terdaftar dan login');
+        return redirect()->route('login.customer')->with('message', 'Kasir berhasil terdaftar');
+    }
+
     // Verifikasi login kasir
     public function loginCashier(Request $request)
     {

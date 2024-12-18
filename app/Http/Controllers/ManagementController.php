@@ -30,24 +30,28 @@ class ManagementController extends Controller
             'quantity' => $request->quantity,
         ]);
 
-        return response()->json(['message' => 'Stok barang berhasil ditambahkan', 'stock' => $stock], 201);
+        return redirect()->route('management.stocks')->with('success', 'Stok berhasil ditambahkan.');
     }
 
     // Fungsi untuk memasukkan tarif laundry
     public function addLaundryRate(Request $request)
-    {
-        $request->validate([
-            'service_name' => 'required|string|max:255',
-            'rate' => 'required|numeric|min:0',
-        ]);
+{
+    $request->validate([
+        'service_name' => 'required|string|max:255',
+        'rate' => 'required|numeric|min:0',
+    ]);
 
+    try {
         $laundryRate = LaundryRate::create([
             'service_name' => $request->service_name,
             'rate' => $request->rate,
         ]);
-
-        return response()->json(['message' => 'Tarif laundry berhasil ditambahkan', 'laundry_rate' => $laundryRate], 201);
+        return redirect()->route('management.laundry_rates')->with('success', 'Tarif Laundry berhasil ditambahkan.');
+    } catch (\Exception $e) {
+        // Menampilkan pesan kesalahan jika ada
+        return back()->withErrors(['error' => 'Gagal menambahkan tarif laundry: ' . $e->getMessage()]);
     }
+}
 
     // Fungsi untuk menerima laporan transaksi dari kasir
     public function getTransactions()

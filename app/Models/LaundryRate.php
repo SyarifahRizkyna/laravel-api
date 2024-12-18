@@ -9,6 +9,10 @@ class LaundryRate extends Model
 {
     use HasFactory;
 
-    // Tentukan kolom yang bisa diisi
-    protected $fillable = ['service_name', 'rate'];
+    // Menentukan atribut yang dapat diisi
+    protected $fillable = [
+        'service_name',
+        'rate',
+    ];
 }
+

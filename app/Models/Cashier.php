@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
 class Cashier extends Authenticatable
 {
@@ -19,10 +19,8 @@ class Cashier extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
-
-    // Kolom-kolom yang tidak dapat diubah (guarded)
-    protected $guarded = [];
 
     // Menyembunyikan kolom sensitif (misalnya, password) dari array hasil JSON
     protected $hidden = [
@@ -30,15 +28,26 @@ class Cashier extends Authenticatable
         'remember_token',
     ];
 
-    // Menentukan tipe atribut untuk password
+    // Menentukan tipe atribut untuk email_verified_at
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    // Jika menggunakan bcrypt untuk password
+    /**
+     * Mutator untuk password agar selalu di-hash sebelum disimpan.
+     */
     public function setPasswordAttribute($value)
     {
-        $this->attributes['password'] = bcrypt($value);
+        // Pastikan password di-hash menggunakan Hash::make
+        $this->attributes['password'] = Hash::make($value);
+    }
+
+    /**
+     * Menambahkan role default jika tidak diatur.
+     */
+    public function setRoleAttribute($value)
+    {
+        // Jika tidak ada nilai role yang diberikan, set default ke 'kasir'
+        $this->attributes['role'] = $value ?: 'kasir';
     }
 }
-
